@@ -368,10 +368,10 @@ function replayWorldCopyLines() {
 function updateWorldCopyReplay(isScrollingDown) {
   if (!worldCopy) return;
   const rect = worldCopy.getBoundingClientRect();
-  const visible = rect.top < window.innerHeight * 0.82 && rect.bottom > window.innerHeight * 0.18;
+  const visible = rect.top < window.innerHeight * 0.58 && rect.bottom > window.innerHeight * 0.38;
   const now = performance.now();
 
-  if (isScrollingDown && visible && now - worldCopyLastReplay > 650) {
+  if (isScrollingDown && visible && now - worldCopyLastReplay > 1500) {
     worldCopyLastReplay = now;
     replayWorldCopyLines();
   }
