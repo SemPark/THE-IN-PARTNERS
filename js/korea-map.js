@@ -328,7 +328,7 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
 let lastScroll = window.scrollY;
 let featureIndex = 0;
 const worldCopy = document.querySelector(".world-copy");
-let worldCopyReplayReady = true;
+let worldCopyLastReplay = 0;
 
 function jumpTo(id) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -368,20 +368,11 @@ function replayWorldCopyLines() {
 function updateWorldCopyReplay(isScrollingDown) {
   if (!worldCopy) return;
   const rect = worldCopy.getBoundingClientRect();
-  const outOfView = rect.bottom < 0 || rect.top > window.innerHeight;
+  const visible = rect.top < window.innerHeight * 0.82 && rect.bottom > window.innerHeight * 0.18;
+  const now = performance.now();
 
-  if (outOfView) {
-    worldCopyReplayReady = true;
-    return;
-  }
-
-  if (
-    isScrollingDown &&
-    worldCopyReplayReady &&
-    rect.top < window.innerHeight * 0.72 &&
-    rect.bottom > window.innerHeight * 0.25
-  ) {
-    worldCopyReplayReady = false;
+  if (isScrollingDown && visible && now - worldCopyLastReplay > 650) {
+    worldCopyLastReplay = now;
     replayWorldCopyLines();
   }
 }
