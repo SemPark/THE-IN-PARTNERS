@@ -134,7 +134,7 @@ function geoToMap(lat, lon) {
 const pinFactory = createPinMeshFactory(THREE);
 const grayColor = new THREE.Color(0x808080);
 const redColor = new THREE.Color(0xe03428);
-const PIN_ROTATION_X = 0.8008;
+const PIN_ROTATION_X = Math.PI / 2;
 const PIN_ROTATION_Y = -0.26;
 const PIN_ROTATION_Z = 0;
 const pinObjects = [];
