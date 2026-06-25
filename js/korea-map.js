@@ -126,7 +126,7 @@ scene.add(ground);
 function geoToMap(lat, lon) {
   return new THREE.Vector3(
     -0.58 + ((lon - 126.1) / 3.5) * 1.2,
-    EXTRUDE_H / 2 + 0.24,
+    EXTRUDE_H / 2,
     -(-0.6 + ((lat - 34.5) / 4.2) * 1.48),
   );
 }
@@ -137,6 +137,7 @@ const redColor = new THREE.Color(0xe03428);
 const PIN_ROTATION_X = Math.PI / 2;
 const PIN_ROTATION_Y = -0.26;
 const PIN_ROTATION_Z = 0;
+const PIN_FLOAT_Y = 0.055;
 const pinObjects = [];
 const clickablePinMeshes = [];
 
@@ -152,6 +153,9 @@ projectPins.forEach((project) => {
 
   pin.position.copy(geoToMap(project.lat, project.lon));
   pin.rotation.set(PIN_ROTATION_X, PIN_ROTATION_Y, PIN_ROTATION_Z);
+  pin.updateMatrixWorld(true);
+  const pinBox = new THREE.Box3().setFromObject(pin);
+  pin.position.y += EXTRUDE_H / 2 - pinBox.min.y + PIN_FLOAT_Y;
   pin.userData.basePosition = pin.position.clone();
   pin.userData.baseScale = 0.044;
   pin.userData.targetScale = 0.044;
