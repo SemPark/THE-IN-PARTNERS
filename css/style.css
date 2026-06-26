@@ -73,3 +73,19 @@ html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto!important}
 .lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
 .lenis.lenis-stopped{overflow:hidden}
+
+.footer-contact{display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,520px);gap:56px;align-items:end;margin:85px 0}
+.footer-copy h2{margin:0;font-size:clamp(54px,7.3vw,124px);line-height:.92;letter-spacing:-.07em;font-weight:300;word-break:keep-all}
+.consult-form{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:22px;padding:28px;backdrop-filter:blur(18px);box-shadow:0 28px 80px rgba(0,24,38,.2)}
+.consult-form strong{display:block;font-size:23px;font-weight:500;margin:0 0 24px}
+.consult-form label{display:block;margin-bottom:16px}
+.consult-form label>span{display:block;margin-bottom:8px;font-size:12px;font-weight:700;letter-spacing:.02em;color:rgba(255,255,255,.72)}
+.consult-form input[type="text"],.consult-form input[type="tel"]{width:100%;height:54px;border:1px solid rgba(255,255,255,.24);border-radius:12px;background:rgba(255,255,255,.12);color:#fff;padding:0 16px;font:inherit;outline:0}
+.consult-form input::placeholder{color:rgba(255,255,255,.45)}
+.consult-form input:focus{border-color:#fff;background:rgba(255,255,255,.18)}
+.privacy-check{display:flex!important;align-items:flex-start;gap:10px;margin:6px 0 22px!important}
+.privacy-check input{width:18px;height:18px;margin:1px 0 0;accent-color:var(--lime);flex:none}
+.privacy-check span{margin:0!important;font-size:12px!important;line-height:1.5!important;font-weight:500!important;color:rgba(255,255,255,.7)!important}
+.consult-form button{width:100%;height:58px;border:0;border-radius:14px;background:#fff;color:var(--deep);font-weight:800;cursor:pointer;box-shadow:0 14px 36px rgba(0,24,38,.2)}
+.consult-form button:hover{background:var(--lime)}
+@media(max-width:900px){.footer-contact{grid-template-columns:1fr;gap:34px;margin:65px 0}.footer-copy h2{font-size:14vw}.consult-form{padding:22px;border-radius:18px}}
