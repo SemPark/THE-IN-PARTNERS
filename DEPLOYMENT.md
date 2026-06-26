@@ -1,21 +1,22 @@
 # Deployment
 
-This repository has two GitHub Actions deployment channels.
+This repository deploys the static site through GitHub Pages.
 
 ## Site
 
-`Deploy site to GitHub Pages` publishes the static website from `main`.
+`Deploy site to GitHub Pages` publishes the website from `main`.
 
-In GitHub, set Pages to use **GitHub Actions** as the source.
+The published artifact includes:
 
-## News Worker
+- `index.html`
+- `admin.html`
+- `assets/`
+- `css/`
+- `js/`
+- `data/`
 
-`Deploy news Worker` publishes `news-worker/` to Cloudflare Workers.
+## News Management
 
-Required GitHub repository secret:
+News items are stored in `data/news.json`.
 
-- `CLOUDFLARE_API_TOKEN`
-
-The Worker still uses the existing Cloudflare secret:
-
-- `ADMIN_PASSWORD`
+The admin page updates that file through the GitHub Contents API. Use a GitHub token with read/write contents access to this repository.

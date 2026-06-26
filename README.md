@@ -9,6 +9,8 @@
 ├─ index.html
 ├─ css/
 │  └─ style.css
+├─ data/
+│  └─ news.json
 ├─ js/
 │  ├─ korea-map.js
 │  ├─ project-data.js
@@ -31,7 +33,6 @@ python3 -m http.server 8000
 ## 배포
 
 - GitHub Pages: 저장소 루트를 Pages 소스로 지정합니다.
-- Cloudflare Pages: 빌드 명령은 비워 두고, 출력 디렉터리를 `/`로 지정합니다.
 - 모든 내부 파일과 이미지 경로는 상대경로로 연결되어 있습니다.
 
 ## 구현 원칙
@@ -39,6 +40,7 @@ python3 -m http.server 8000
 - 전체 원페이지는 빌드 과정 없이 정적 HTML/CSS/JavaScript로 실행됩니다.
 - 3D 지도는 WebGL renderer, scene, camera, canvas를 각각 하나만 사용합니다.
 - 프로젝트 핀은 `project-data.js`의 `projectPins`에서 관리합니다.
+- 뉴스 링크는 `data/news.json`에서 관리합니다.
 - 핀은 `pin_mesh_factory.js`가 생성한 Three.js Mesh를 `scene.add(pin)`으로 추가합니다.
 - 핀 선택은 Raycaster로 처리합니다.
 - 선택 전에는 회색, 선택 시에는 빨간색으로 전환됩니다.

@@ -1,69 +1,113 @@
-const NEWS_ADMIN_API_BASE = "https://customer-news-board.cleansam7.workers.dev";
+const GITHUB_OWNER = "SemPark";
+const GITHUB_REPO = "ellinikon-korea-static";
+const GITHUB_BRANCH = "main";
+const NEWS_FILE_PATH = "data/news.json";
+const GITHUB_CONTENTS_API = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${NEWS_FILE_PATH}`;
 
 const loginPanel = document.querySelector("#loginPanel");
 const managerPanel = document.querySelector("#managerPanel");
 const loginForm = document.querySelector("#loginForm");
-const password = document.querySelector("#password");
+const githubToken = document.querySelector("#githubToken");
 const newsForm = document.querySelector("#newsForm");
 const newsUrl = document.querySelector("#newsUrl");
+const newsTitle = document.querySelector("#newsTitle");
+const newsExcerpt = document.querySelector("#newsExcerpt");
+const newsImage = document.querySelector("#newsImage");
+const newsDate = document.querySelector("#newsDate");
 const adminList = document.querySelector("#adminList");
 const message = document.querySelector("#message");
 const loginMessage = document.querySelector("#loginMessage");
 const adminCount = document.querySelector("#adminCount");
 
-let adminPassword = "";
+let token = sessionStorage.getItem("thein_news_github_token") || "";
+let fileSha = "";
+let newsItems = [];
+
+if (token) {
+  githubToken.value = token;
+  loadAdminNews();
+}
 
 loginForm.addEventListener("submit", async (event) => {
   event.preventDefault();
-  adminPassword = password.value;
+  token = githubToken.value.trim();
+  sessionStorage.setItem("thein_news_github_token", token);
   await loadAdminNews();
 });
 
 newsForm.addEventListener("submit", async (event) => {
   event.preventDefault();
-  const url = newsUrl.value.trim();
+  const item = normalizeAdminNewsItem({
+    id: crypto.randomUUID(),
+    url: newsUrl.value,
+    title: newsTitle.value,
+    sourceName: hostname(newsUrl.value),
+    excerpt: newsExcerpt.value,
+    image: newsImage.value,
+    date: newsDate.value,
+  });
 
   try {
-    const response = await fetch(`${NEWS_ADMIN_API_BASE}/api/admin/news`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "x-admin-password": adminPassword,
-      },
-      body: JSON.stringify({ url }),
-    });
-    const payload = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(payload.error || "뉴스를 추가하지 못했습니다.");
-
-    newsUrl.value = "";
+    await saveNewsItems([item, ...newsItems], "Add news link");
+    newsForm.reset();
     setMessage("뉴스 링크를 추가했습니다.");
-    await loadAdminNews();
   } catch (error) {
-    setMessage(error.message || "뉴스 API 연결이 차단되었습니다. Workers CORS 설정이 필요합니다.");
+    setMessage(error.message || "뉴스를 추가하지 못했습니다.");
   }
 });
 
 async function loadAdminNews() {
   try {
-    const response = await fetch(`${NEWS_ADMIN_API_BASE}/api/admin/news`, {
-      headers: { "x-admin-password": adminPassword },
-    });
-    const payload = await response.json().catch(() => []);
-    if (!response.ok) throw new Error(payload.error || "로그인이 필요합니다.");
+    const file = await fetchNewsFile();
+    fileSha = file.sha;
+    newsItems = parseNewsContent(file.content);
 
     loginPanel.classList.add("hidden");
     managerPanel.classList.remove("hidden");
     loginMessage.textContent = "";
-    setMessage("로그인되었습니다.");
-    renderAdminList(payload);
+    setMessage("GitHub 저장소와 연결되었습니다.");
+    renderAdminList(newsItems);
   } catch (error) {
-    adminPassword = "";
-    password.value = "";
-    password.focus();
+    token = "";
+    sessionStorage.removeItem("thein_news_github_token");
+    githubToken.value = "";
+    githubToken.focus();
     loginPanel.classList.remove("hidden");
     managerPanel.classList.add("hidden");
-    setLoginMessage(error.message || "뉴스 API 연결이 차단되었습니다. Workers CORS 설정이 필요합니다.");
+    setLoginMessage(error.message || "GitHub 토큰을 확인해 주세요.");
   }
+}
+
+async function fetchNewsFile() {
+  const response = await fetch(`${GITHUB_CONTENTS_API}?ref=${GITHUB_BRANCH}`, {
+    headers: githubHeaders(),
+  });
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(payload.message || "뉴스 파일을 불러오지 못했습니다.");
+  return payload;
+}
+
+async function saveNewsItems(items, commitMessage) {
+  const cleanItems = items.map(normalizeAdminNewsItem);
+  const response = await fetch(GITHUB_CONTENTS_API, {
+    method: "PUT",
+    headers: {
+      ...githubHeaders(),
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      message: commitMessage,
+      content: toBase64(JSON.stringify(cleanItems, null, 2) + "\n"),
+      sha: fileSha,
+      branch: GITHUB_BRANCH,
+    }),
+  });
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(payload.message || "GitHub 저장에 실패했습니다.");
+
+  fileSha = payload.content.sha;
+  newsItems = cleanItems;
+  renderAdminList(newsItems);
 }
 
 function renderAdminList(items) {
@@ -78,7 +122,10 @@ function renderAdminList(items) {
     const row = document.createElement("div");
     row.className = "admin-item";
     row.innerHTML = `
-      <a class="admin-url" href="${escapeAdminHtml(item.url)}" target="_blank" rel="noopener">${escapeAdminHtml(item.url)}</a>
+      <div class="admin-news-text">
+        <a class="admin-url" href="${escapeAdminHtml(item.url)}" target="_blank" rel="noopener">${escapeAdminHtml(item.title || item.url)}</a>
+        <span>${escapeAdminHtml(item.sourceName || hostname(item.url))}</span>
+      </div>
       <button class="danger-btn" type="button" aria-label="삭제">×</button>
     `;
     row.querySelector("button").addEventListener("click", () => deleteNews(item.id));
@@ -88,17 +135,74 @@ function renderAdminList(items) {
 
 async function deleteNews(id) {
   try {
-    const response = await fetch(`${NEWS_ADMIN_API_BASE}/api/admin/news?id=${encodeURIComponent(id)}`, {
-      method: "DELETE",
-      headers: { "x-admin-password": adminPassword },
-    });
-    const payload = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(payload.error || "삭제하지 못했습니다.");
-
+    await saveNewsItems(newsItems.filter((item) => item.id !== id), "Remove news link");
     setMessage("뉴스 링크를 삭제했습니다.");
-    await loadAdminNews();
   } catch (error) {
-    setMessage(error.message || "뉴스 API 연결이 차단되었습니다. Workers CORS 설정이 필요합니다.");
+    setMessage(error.message || "삭제하지 못했습니다.");
+  }
+}
+
+function parseNewsContent(content) {
+  try {
+    const json = fromBase64(content);
+    const items = JSON.parse(json);
+    return Array.isArray(items) ? items.map(normalizeAdminNewsItem) : [];
+  } catch {
+    throw new Error("뉴스 파일 형식을 읽지 못했습니다.");
+  }
+}
+
+function normalizeAdminNewsItem(item) {
+  const url = String(item.url || "").trim();
+  if (!isValidUrl(url)) throw new Error("올바른 뉴스 링크를 입력해 주세요.");
+  return {
+    id: item.id || crypto.randomUUID(),
+    url,
+    title: String(item.title || hostname(url)).trim(),
+    sourceName: String(item.sourceName || hostname(url)).trim(),
+    excerpt: String(item.excerpt || "").trim(),
+    image: String(item.image || "").trim(),
+    date: String(item.date || "").trim(),
+  };
+}
+
+function githubHeaders() {
+  return {
+    accept: "application/vnd.github+json",
+    authorization: `Bearer ${token}`,
+    "x-github-api-version": "2022-11-28",
+  };
+}
+
+function toBase64(value) {
+  const bytes = new TextEncoder().encode(value);
+  let binary = "";
+  bytes.forEach((byte) => {
+    binary += String.fromCharCode(byte);
+  });
+  return btoa(binary);
+}
+
+function fromBase64(value) {
+  const binary = atob(String(value || "").replace(/\s/g, ""));
+  const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+  return new TextDecoder().decode(bytes);
+}
+
+function isValidUrl(value) {
+  try {
+    const url = new URL(value);
+    return ["http:", "https:"].includes(url.protocol);
+  } catch {
+    return false;
+  }
+}
+
+function hostname(value) {
+  try {
+    return new URL(value).hostname.replace(/^www\./, "");
+  } catch {
+    return "news";
   }
 }
 

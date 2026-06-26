@@ -30,7 +30,8 @@
       }
 
       button,
-      input {
+      input,
+      textarea {
         font: inherit;
       }
 
@@ -150,7 +151,11 @@
       }
 
       .admin-form {
-        grid-template-columns: 1fr 130px;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .admin-form .full {
+        grid-column: 1 / -1;
       }
 
       .input {
@@ -160,6 +165,12 @@
         padding: 0 14px;
         background: white;
         color: var(--text);
+      }
+
+      textarea.input {
+        min-height: 92px;
+        padding: 12px 14px;
+        resize: vertical;
       }
 
       .primary-btn {
@@ -184,6 +195,17 @@
         border: 1px solid var(--line);
         border-radius: 8px;
         background: white;
+      }
+
+      .admin-news-text {
+        min-width: 0;
+        display: grid;
+        gap: 4px;
+      }
+
+      .admin-news-text span {
+        color: var(--muted);
+        font-size: 13px;
       }
 
       .admin-url {
@@ -252,7 +274,7 @@
       <section class="hero">
         <div>
           <h1>뉴스 링크를 관리합니다.</h1>
-          <p class="lead">기사 URL을 등록하면 사이트 뉴스 섹션에 카드로 표시됩니다.</p>
+          <p class="lead">GitHub 저장소의 뉴스 파일을 수정해 사이트 뉴스 섹션에 반영합니다.</p>
         </div>
         <aside class="stat" aria-label="등록된 뉴스 수">
           <strong id="adminCount">0</strong>
@@ -262,7 +284,7 @@
 
       <section class="panel" id="loginPanel">
         <form class="login-form" id="loginForm">
-          <input class="input" id="password" type="password" autocomplete="current-password" placeholder="관리자 비밀번호" autofocus />
+          <input class="input" id="githubToken" type="password" autocomplete="current-password" placeholder="GitHub 관리자 토큰" autofocus />
           <button class="primary-btn" type="submit">로그인</button>
         </form>
         <p class="message" id="loginMessage"></p>
@@ -270,8 +292,12 @@
 
       <section class="panel hidden" id="managerPanel">
         <form class="admin-form" id="newsForm">
-          <input class="input" id="newsUrl" type="url" placeholder="https://news.example.com/article" required />
-          <button class="primary-btn" type="submit">추가</button>
+          <input class="input full" id="newsUrl" type="url" placeholder="https://news.example.com/article" required />
+          <input class="input" id="newsTitle" type="text" placeholder="기사 제목" />
+          <input class="input" id="newsDate" type="text" placeholder="날짜" />
+          <input class="input full" id="newsImage" type="url" placeholder="썸네일 이미지 URL" />
+          <textarea class="input full" id="newsExcerpt" placeholder="기사 요약"></textarea>
+          <button class="primary-btn full" type="submit">추가</button>
         </form>
         <div class="admin-list" id="adminList"></div>
         <p class="message" id="message"></p>

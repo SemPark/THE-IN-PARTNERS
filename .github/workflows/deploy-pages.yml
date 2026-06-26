@@ -5,8 +5,7 @@ on:
     branches:
       - main
     paths-ignore:
-      - "news-worker/**"
-      - ".github/workflows/deploy-news-worker.yml"
+      - "README.md"
   workflow_dispatch:
 
 permissions:
@@ -34,7 +33,7 @@ jobs:
       - name: Prepare site artifact
         run: |
           mkdir _site
-          cp -R .nojekyll index.html admin.html assets css js _site/
+          cp -R .nojekyll index.html admin.html assets css js data _site/
 
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
