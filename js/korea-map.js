@@ -329,6 +329,9 @@ let lastScroll = window.scrollY;
 let featureIndex = 0;
 const worldCopy = document.querySelector(".world-copy");
 const worldCopyLines = worldCopy ? Array.from(worldCopy.querySelectorAll(".slide-line")) : [];
+let worldCopyRevealIndex = 0;
+let worldCopyReplayIndex = 0;
+let worldCopyLastPlayTime = 0;
 const lenis =
   !reduceMotion && window.Lenis
     ? new Lenis({
@@ -386,34 +389,41 @@ function replayWorldCopyLine(line) {
   });
 }
 
-function updateWorldCopyReplay(isScrollingDown) {
+function playNextWorldCopyLine() {
   if (!worldCopyLines.length) return;
-  const triggerY = window.innerHeight * 0.76;
+  const now = performance.now();
+  if (now - worldCopyLastPlayTime < 760) return;
+  const worldRect = worldCopy.getBoundingClientRect();
+  const sectionActive = worldRect.top < window.innerHeight * 0.86 && worldRect.bottom > window.innerHeight * 0.14;
+  if (!sectionActive) return;
 
-  if (!isScrollingDown) {
-    worldCopyLines.forEach((line) => {
-      line.dataset.worldCopyTop = String(line.getBoundingClientRect().top);
-    });
+  if (worldCopyRevealIndex < worldCopyLines.length) {
+    const nextLine = worldCopyLines[worldCopyRevealIndex];
+    if (nextLine.getBoundingClientRect().top > window.innerHeight * 0.94) return;
+    replayWorldCopyLine(nextLine);
+    worldCopyLastPlayTime = now;
+    worldCopyRevealIndex += 1;
+    worldCopyReplayIndex = worldCopyRevealIndex;
     return;
   }
 
-  let activeLine = null;
-  worldCopyLines.forEach((line) => {
-    const rect = line.getBoundingClientRect();
-    const previousTop = Number(line.dataset.worldCopyTop ?? rect.top);
-    const crossedTrigger = previousTop > triggerY && rect.top <= triggerY;
-    const stillVisible = rect.bottom >= window.innerHeight * 0.12;
-    if (!activeLine && crossedTrigger && stillVisible) {
-      activeLine = line;
-      line.dataset.worldCopyTop = String(rect.top);
-    } else if (!crossedTrigger) {
-      line.dataset.worldCopyTop = String(rect.top);
-    }
-  });
-
-  if (!activeLine) return;
-  replayWorldCopyLine(activeLine);
+  const replayLine = worldCopyLines[worldCopyReplayIndex % worldCopyLines.length];
+  replayWorldCopyLine(replayLine);
+  worldCopyLastPlayTime = now;
+  worldCopyReplayIndex += 1;
 }
+
+window.addEventListener(
+  "wheel",
+  (event) => {
+    if (event.deltaY < 0) {
+      worldCopyReplayIndex = 0;
+      return;
+    }
+    if (event.deltaY > 0) playNextWorldCopyLine();
+  },
+  { passive: true },
+);
 
 function setDestination(index) {
   document.querySelectorAll("[data-destination]").forEach((button) => {
@@ -477,7 +487,6 @@ function updatePage() {
     "--map-progress",
     String(1 - Math.pow(1 - mapProgress, 3)),
   );
-  updateWorldCopyReplay(isScrollingDown);
 
   header.classList.toggle("is-solid", y > solidStart);
   if (y <= 0) header.classList.remove("is-hidden");
