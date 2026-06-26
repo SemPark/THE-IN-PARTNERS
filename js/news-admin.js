@@ -128,14 +128,23 @@ function renderAdminList(items) {
       </div>
       <button class="danger-btn" type="button" aria-label="삭제">×</button>
     `;
-    row.querySelector("button").addEventListener("click", () => deleteNews(item.id));
+    row.querySelector("button").addEventListener("click", () => deleteNews(item));
     adminList.appendChild(row);
   });
 }
 
-async function deleteNews(id) {
+async function deleteNews(target) {
   try {
-    await saveNewsItems(newsItems.filter((item) => item.id !== id), "Remove news link");
+    const file = await fetchNewsFile();
+    fileSha = file.sha;
+    const latestItems = parseNewsContent(file.content);
+    const nextItems = latestItems.filter((item) => item.id !== target.id && item.url !== target.url);
+
+    if (nextItems.length === latestItems.length) {
+      throw new Error("삭제할 뉴스를 찾지 못했습니다.");
+    }
+
+    await saveNewsItems(nextItems, "Remove news link");
     setMessage("뉴스 링크를 삭제했습니다.");
   } catch (error) {
     setMessage(error.message || "삭제하지 못했습니다.");
