@@ -1,5 +1,5 @@
 const GITHUB_OWNER = "SemPark";
-const GITHUB_REPO = "ellinikon-korea-static";
+const GITHUB_REPO = "THE-IN-PARTNERS";
 const GITHUB_BRANCH = "main";
 const NEWS_FILE_PATH = "data/news.json";
 const GITHUB_CONTENTS_API = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${NEWS_FILE_PATH}`;
