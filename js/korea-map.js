@@ -13,18 +13,18 @@ const panelCompletion = document.getElementById("panelCompletion");
 const panelNote = document.getElementById("panelNote");
 
 const staticProjectLayout = [
-  { label: "인천 마리나베이", x: 22.5, y: 33.8 },
-  { label: "사당 2동", x: 29.2, y: 35.0 },
-  { label: "탄벌 지역 주택조합", x: 34.0, y: 38.0 },
-  { label: "동작 하이 팰리스", x: 27.0, y: 36.4 },
-  { label: "김포 운양정", x: 20.0, y: 33.0 },
-  { label: "더엘본 가평 설악", x: 38.5, y: 30.0 },
-  { label: "청주 금천", x: 42.5, y: 51.0 },
-  { label: "농성 1동 연례마을", x: 30.0, y: 72.0 },
-  { label: "상도동 효성 헤링턴", x: 27.8, y: 36.0 },
-  { label: "김천 혁신 휴시티", x: 51.0, y: 58.0 },
-  { label: "내당지역 주택조합(제타시티)", x: 57.0, y: 64.0 },
-  { label: "안심역 지역주택조합", x: 60.5, y: 62.0 },
+  { label: "인천 마리나베이", x: 15.0, y: 19.8 },
+  { label: "사당 2동", x: 23.2, y: 22.0 },
+  { label: "탄벌 지역 주택조합", x: 30.8, y: 24.5 },
+  { label: "동작 하이 팰리스", x: 22.0, y: 23.6 },
+  { label: "김포 운양정", x: 16.6, y: 18.7 },
+  { label: "더엘본 가평 설악", x: 36.8, y: 17.5 },
+  { label: "청주 금천", x: 39.0, y: 42.2 },
+  { label: "농성 1동 연례마을", x: 24.2, y: 69.3 },
+  { label: "상도동 효성 헤링턴", x: 23.5, y: 22.8 },
+  { label: "김천 혁신 휴시티", x: 50.5, y: 54.8 },
+  { label: "내당지역 주택조합(제타시티)", x: 61.8, y: 61.7 },
+  { label: "안심역 지역주택조합", x: 65.6, y: 59.4 },
 ];
 
 const mapProjects = projectPins.map((project, index) => ({

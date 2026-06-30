@@ -158,14 +158,14 @@ body{font-family:Pretendard,Manrope,Arial,sans-serif!important}
 
 /* 2026-06-30 map reference layout */
 .korea-map-section#map{height:100vh;min-height:clamp(1080px,71vw,1360px);background:#393080;overflow:hidden}
-.korea-map-section#map .map-canvas{container-type:inline-size;position:absolute;left:14.2vw;top:42px;right:auto;bottom:auto;width:min(680px,36vw);height:auto;aspect-ratio:0.7;transform:none;transition:none;pointer-events:auto}
+.korea-map-section#map .map-canvas{container-type:inline-size;position:absolute;left:0;top:42px;right:auto;bottom:auto;width:min(980px,54vw);height:auto;aspect-ratio:1754/1241;transform:none;transition:none;pointer-events:auto}
 .korea-map-section#map.has-selection .map-canvas{--map-shift:0vw}
 .korea-outline-map{display:block;width:100%;height:100%;object-fit:contain;user-select:none;pointer-events:none}
-.map-pin-layer{position:absolute;inset:0;z-index:2}
-.map-static-pin{position:absolute;display:grid;place-items:center;width:clamp(22px,6.1cqw,38px);height:clamp(22px,6.1cqw,38px);padding:0;border:0;background:transparent;transform:translate(-50%,-50%);cursor:pointer;filter:drop-shadow(0 4px 5px rgba(0,0,0,.12));transition:transform .24s ease,filter .24s ease}
+.map-pin-layer{position:absolute;z-index:2;left:24.4%;top:6.04%;width:51.2%;height:87.84%}
+.map-static-pin{position:absolute;display:grid;place-items:center;width:clamp(22px,4.2cqw,40px);height:clamp(22px,4.2cqw,40px);padding:0;border:0;background:transparent;transform:translate(-50%,-50%);cursor:pointer;filter:drop-shadow(0 4px 5px rgba(0,0,0,.12));transition:transform .24s ease,filter .24s ease}
 .map-static-pin img{display:block;width:100%;height:100%;object-fit:contain}
 .map-static-pin:hover{transform:translate(-50%,-50%) scale(1.08)}
-.map-static-pin.is-active{width:clamp(28px,6.8cqw,44px);height:clamp(44px,10.4cqw,67px);z-index:3;filter:drop-shadow(0 8px 10px rgba(0,0,0,.18));animation:selectedPinFloat 2.7s ease-in-out infinite}
+.map-static-pin.is-active{width:clamp(28px,5.1cqw,48px);height:clamp(44px,7.7cqw,72px);z-index:3;filter:drop-shadow(0 8px 10px rgba(0,0,0,.18));animation:selectedPinFloat 2.7s ease-in-out infinite}
 .map-static-pin.is-active:hover{transform:translate(-50%,-50%) scale(1.04)}
 .map-card#projectPanel{position:absolute;z-index:5;right:7.8vw;top:32.4%;width:min(820px,45vw);background:transparent;box-shadow:none;opacity:1;pointer-events:auto;transform:none;transition:opacity .25s ease}
 .map-card#projectPanel.is-active{transform:none}
@@ -177,5 +177,5 @@ body{font-family:Pretendard,Manrope,Arial,sans-serif!important}
 .map-pills#projectPills button:hover{background:rgba(255,255,255,.16)}
 .map-pills#projectPills button.active:hover{background:#fff}
 @keyframes selectedPinFloat{0%,100%{transform:translate(-50%,-50%)}50%{transform:translate(-50%,calc(-50% - 12px))}}
-@media(max-width:1180px){.korea-map-section#map{min-height:1120px}.korea-map-section#map .map-canvas{left:6vw;width:min(560px,43vw)}.map-card#projectPanel{right:5vw;width:48vw}.map-pills#projectPills{width:90vw}.map-pills#projectPills button{font-size:24px;min-height:56px;padding:0 28px;border-width:4px}}
-@media(max-width:900px){.korea-map-section#map{height:auto;min-height:0;padding:86px 18px 46px}.korea-map-section#map .map-canvas{position:relative;left:auto;top:auto;width:min(82vw,480px);margin:0 auto 28px;aspect-ratio:.7}.map-card#projectPanel{position:relative;right:auto;top:auto;width:100%;margin:0 auto 30px}.map-card#projectPanel>img{box-shadow:0 10px 24px rgba(0,0,0,.18)}.map-pills#projectPills{position:relative;left:auto;bottom:auto;width:100%;transform:none;gap:10px;overflow:visible}.map-pills#projectPills button{min-height:40px;padding:0 16px;border-width:3px;font-size:15px}}
+@media(max-width:1180px){.korea-map-section#map{min-height:1120px}.korea-map-section#map .map-canvas{left:-4vw;width:min(780px,62vw)}.map-card#projectPanel{right:5vw;width:48vw}.map-pills#projectPills{width:90vw}.map-pills#projectPills button{font-size:24px;min-height:56px;padding:0 28px;border-width:4px}}
+@media(max-width:900px){.korea-map-section#map{height:auto;min-height:0;padding:86px 18px 46px}.korea-map-section#map .map-canvas{position:relative;left:auto;top:auto;width:min(96vw,680px);margin:0 auto 28px;aspect-ratio:1754/1241}.map-card#projectPanel{position:relative;right:auto;top:auto;width:100%;margin:0 auto 30px}.map-card#projectPanel>img{box-shadow:0 10px 24px rgba(0,0,0,.18)}.map-pills#projectPills{position:relative;left:auto;bottom:auto;width:100%;transform:none;gap:10px;overflow:visible}.map-pills#projectPills button{min-height:40px;padding:0 16px;border-width:3px;font-size:15px}}
