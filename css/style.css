@@ -132,14 +132,24 @@ body{font-family:Pretendard,Manrope,Arial,sans-serif!important}
 @keyframes portfolioRight{from{transform:translateX(-50%)}to{transform:translateX(0)}}
 @media(max-width:760px){.world-copy{min-height:92vh!important;padding:80px 18px!important}.strategy-lines{gap:110px!important}.portfolio-marquee{height:170px!important}.portfolio-marquee__track img{height:165px!important}.portfolio-flow__title{padding:0 18px!important}}
 
-/* 2026-06-30 visible business copy and seamless portfolio rows */
-.world-copy .strategy-lines,.world-copy .strategy-block,.world-copy .strategy-block b,.world-copy .strategy-block span{opacity:1!important;visibility:visible!important;color:#fff!important;mix-blend-mode:normal!important;text-shadow:none!important}
-.world-copy .strategy-block b,.world-copy .strategy-block span{position:relative!important;z-index:2!important;display:block!important}
-.world-copy .slide-line:not(.in-view){opacity:1!important;visibility:visible!important}
-.portfolio-flow{background:#5a5297!important;overflow:hidden!important}
-.portfolio-marquee{overflow:hidden!important;width:100%!important;height:clamp(220px,18vw,285px)!important;margin:0!important;padding:0!important}
-.portfolio-marquee+.portfolio-marquee{margin-top:clamp(22px,2.2vw,42px)!important}
+
+/* 2026-06-30 restore text motion and clean portfolio rows */
+.world-copy{background:linear-gradient(180deg,#332782 0%,#463f91 52%,#5b5699 100%)!important;color:#fff!important;overflow:hidden!important}
+.world-copy .strategy-lines,.world-copy .strategy-block{visibility:visible!important;color:#fff!important}
+.world-copy .strategy-block{position:relative!important;display:block!important;clear:both!important}
+.world-copy .strategy-block b,.world-copy .strategy-block span{display:block!important;position:relative!important;z-index:2!important;color:#fff!important;visibility:visible!important;mix-blend-mode:normal!important;text-shadow:none!important;opacity:0!important;transition:transform 1.05s cubic-bezier(.19,1,.22,1),opacity .85s ease!important}
+.world-copy .strategy-block b.in-view,.world-copy .strategy-block span.in-view{opacity:1!important;transform:translateY(0)!important}
+.world-copy .slide-line.from-up:not(.in-view){transform:translateY(78px)!important}
+.world-copy .slide-line.from-down:not(.in-view){transform:translateY(-78px)!important}
+.strategy-human{width:min(64vw,1080px)!important;text-align:left!important}
+.strategy-human span{width:max-content!important;max-width:100%!important;margin-left:auto!important;text-align:right!important}
+.strategy-trust{width:min(82vw,1620px)!important;margin-left:auto!important;text-align:right!important}
+.strategy-success{width:min(72vw,1380px)!important;text-align:left!important}
+.portfolio-flow{background:linear-gradient(180deg,#5b5699 0%,#42388c 48%,#2d246f 100%)!important;overflow:hidden!important;padding:5vw 0 7vw!important}
+.portfolio-marquee{overflow:hidden!important;width:100%!important;height:clamp(180px,14.7vw,250px)!important;margin:0!important;padding:0!important;line-height:0!important}
+.portfolio-marquee+.portfolio-marquee{margin-top:clamp(34px,3.2vw,62px)!important}
 .portfolio-marquee__track{display:flex!important;gap:0!important;align-items:center!important;width:max-content!important;will-change:transform!important}
-.portfolio-marquee__track img{height:clamp(210px,17vw,270px)!important;width:auto!important;max-width:none!important;display:block!important;flex:0 0 auto!important;margin:0!important;padding:0!important;object-fit:contain!important}
-.portfolio-marquee--top .portfolio-marquee__track{animation:portfolioLeft 24s linear infinite!important}
-.portfolio-marquee--bottom .portfolio-marquee__track{animation:portfolioRight 26s linear infinite!important}
+.portfolio-marquee__track img{height:clamp(170px,13.8vw,235px)!important;width:auto!important;max-width:none!important;display:block!important;flex:0 0 auto!important;margin:0!important;padding:0!important;object-fit:contain!important}
+.portfolio-marquee--top .portfolio-marquee__track{animation:portfolioLeft 32s linear infinite!important}
+.portfolio-marquee--bottom .portfolio-marquee__track{animation:portfolioRight 34s linear infinite!important}
+@media(max-width:760px){.portfolio-marquee{height:118px!important}.portfolio-marquee__track img{height:112px!important}.portfolio-marquee+.portfolio-marquee{margin-top:28px!important}}
