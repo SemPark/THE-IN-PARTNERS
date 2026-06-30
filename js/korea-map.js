@@ -12,27 +12,48 @@ const panelUnits = document.getElementById("panelUnits");
 const panelCompletion = document.getElementById("panelCompletion");
 const panelNote = document.getElementById("panelNote");
 
-const staticProjectLayout = [
-  { label: "인천 마리나베이", x: 18.8, y: 20.5 },
-  { label: "사당 2동", x: 25.4, y: 22.6 },
-  { label: "탄벌 지역 주택조합", x: 31.8, y: 25.4 },
-  { label: "동작 하이 팰리스", x: 24.4, y: 24.0 },
-  { label: "김포 운양정", x: 20.6, y: 19.6 },
-  { label: "더엘본 가평 설악", x: 37.6, y: 18.3 },
-  { label: "청주 금천", x: 39.8, y: 42.4 },
-  { label: "농성 1동 연례마을", x: 25.3, y: 68.8 },
-  { label: "상도동 효성 헤링턴", x: 25.0, y: 23.5 },
-  { label: "김천 혁신 휴시티", x: 50.6, y: 54.2 },
-  { label: "내당지역 주택조합(제타시티)", x: 59.8, y: 60.5 },
-  { label: "안심역 지역주택조합", x: 63.5, y: 58.4 },
+const staticProjectLabels = [
+  "인천 마리나베이",
+  "사당 2동",
+  "탄벌 지역 주택조합",
+  "동작 하이 팰리스",
+  "김포 운양정",
+  "더엘본 가평 설악",
+  "청주 금천",
+  "농성 1동 연례마을",
+  "상도동 효성 헤링턴",
+  "김천 혁신 휴시티",
+  "내당지역 주택조합(제타시티)",
+  "안심역 지역주택조합",
 ];
+
+const koreaMapBounds = {
+  west: 125.35,
+  east: 130.75,
+  north: 38.7,
+  south: 33.1,
+};
+
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
+function projectLatLonToMapPoint(lat, lon) {
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) return { x: 50, y: 50 };
+  const x = ((lon - koreaMapBounds.west) / (koreaMapBounds.east - koreaMapBounds.west)) * 100;
+  const y = ((koreaMapBounds.north - lat) / (koreaMapBounds.north - koreaMapBounds.south)) * 100;
+  return {
+    x: clamp(x, 0, 100),
+    y: clamp(y, 0, 100),
+  };
+}
 
 const mapProjects = projectPins.map((project, index) => ({
   ...project,
-  mapLabel: staticProjectLayout[index]?.label || project.label,
+  mapLabel: staticProjectLabels[index] || project.label,
   panelAsset: `./assets/map/details/project-${String(index + 1).padStart(2, "0")}.jpg`,
-  pinX: staticProjectLayout[index]?.x ?? 50,
-  pinY: staticProjectLayout[index]?.y ?? 50,
+  pinX: projectLatLonToMapPoint(project.lat, project.lon).x,
+  pinY: projectLatLonToMapPoint(project.lat, project.lon).y,
 }));
 
 const pinButtons = new Map();
