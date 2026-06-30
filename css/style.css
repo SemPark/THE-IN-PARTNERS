@@ -165,7 +165,7 @@ body{font-family:Pretendard,Manrope,Arial,sans-serif!important}
 .map-static-pin{position:absolute;display:grid;place-items:center;width:clamp(14px,2.9cqw,24px);height:clamp(14px,2.9cqw,24px);padding:0;border:0;border-radius:50%;background:#ffd08b;transform:translate(-50%,-50%);cursor:pointer;box-shadow:0 0 0 1px rgba(255,255,255,.28),0 4px 7px rgba(0,0,0,.14);transition:transform .24s ease,background .18s ease,box-shadow .18s ease}
 .map-static-pin img{display:none}
 .map-static-pin:hover{transform:translate(-50%,-50%) scale(1.08)}
-.map-static-pin.is-active{width:clamp(10px,1.8cqw,16px);height:clamp(15px,2.75cqw,24px);z-index:3;border-radius:0;background:transparent;box-shadow:none;transform:translate(-50%,-84%);animation:selectedPinFloat 2.7s ease-in-out infinite}
+.map-static-pin.is-active{width:clamp(20px,3.6cqw,32px);height:clamp(30px,5.5cqw,48px);z-index:3;border-radius:0;background:transparent;box-shadow:none;transform:translate(-50%,-84%);animation:selectedPinFloat 2.7s ease-in-out infinite}
 .map-static-pin.is-active img{display:block;width:100%;height:100%;object-fit:contain}
 .map-static-pin.is-active:hover{transform:translate(-50%,-84%) scale(1.04)}
 .map-card#projectPanel{position:absolute;z-index:5;right:7vw;top:29vh;width:min(780px,40.5vw);background:transparent;box-shadow:none;opacity:1;pointer-events:auto;transform:none;transition:opacity .25s ease}
