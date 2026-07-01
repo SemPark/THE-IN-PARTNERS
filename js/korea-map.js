@@ -27,11 +27,13 @@ const staticProjectLabels = [
   "안심역 지역주택조합",
 ];
 
-const koreaMapBounds = {
-  west: 125.35,
-  east: 130.75,
-  north: 38.7,
-  south: 33.1,
+const seoulMapAnchor = {
+  lat: 37.5665,
+  lon: 126.978,
+  x: 29.6,
+  y: 22.0,
+  xScale: 17.8,
+  yScale: 20.2,
 };
 
 function clamp(value, min, max) {
@@ -40,8 +42,8 @@ function clamp(value, min, max) {
 
 function projectLatLonToMapPoint(lat, lon) {
   if (!Number.isFinite(lat) || !Number.isFinite(lon)) return { x: 50, y: 50 };
-  const x = ((lon - koreaMapBounds.west) / (koreaMapBounds.east - koreaMapBounds.west)) * 100;
-  const y = ((koreaMapBounds.north - lat) / (koreaMapBounds.north - koreaMapBounds.south)) * 100;
+  const x = seoulMapAnchor.x + (lon - seoulMapAnchor.lon) * seoulMapAnchor.xScale;
+  const y = seoulMapAnchor.y + (seoulMapAnchor.lat - lat) * seoulMapAnchor.yScale;
   return {
     x: clamp(x, 0, 100),
     y: clamp(y, 0, 100),
