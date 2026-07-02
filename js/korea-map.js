@@ -159,7 +159,6 @@ const lenis =
         lerp: 0.105,
         wheelMultiplier: 0.88,
         touchMultiplier: 1.05,
-        prevent: (node) => node.closest?.(".map-pills,.map-card"),
       })
     : null;
 
@@ -307,6 +306,6 @@ function updatePage() {
   }
 }
 
-lenis?.on("scroll", updatePage);
-window.addEventListener("scroll", updatePage, { passive: true });
+if (lenis) lenis.on("scroll", updatePage);
+else window.addEventListener("scroll", updatePage, { passive: true });
 updatePage();
