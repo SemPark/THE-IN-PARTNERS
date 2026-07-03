@@ -112,22 +112,19 @@ body{font-family:Pretendard,Manrope,Arial,sans-serif!important}
 
 
 /* 2026-06-30 text-only layout without animation overrides */
-.world-copy#business{position:relative;background:linear-gradient(180deg,#312b7f 0%,#524b91 100%);color:#fff;min-height:100vh;padding:0 2.4vw 28px;overflow:hidden}
-.world-copy#business .nine-line-layout{position:relative;min-height:calc(100vh - 28px);margin:0}
-.world-copy#business .nine-line-layout p{position:absolute;margin:0;color:#fff}
+.world-copy#business{position:relative;background:linear-gradient(180deg,#312b7f 0%,#524b91 100%);color:#fff;min-height:100vh;padding:0 2.4vw;overflow:hidden}
+.world-copy#business .nine-line-layout{position:relative;min-height:100vh;margin:0}
+.world-copy#business .nine-line-layout p{position:absolute;margin:0;padding-left:0;color:#fff}
 .world-copy#business .nine-line-layout b,.world-copy#business .nine-line-layout span{display:block;color:#fff;font-weight:900;letter-spacing:0;white-space:nowrap}
 .world-copy#business .nine-line-layout b{font-size:clamp(96px,9vw,172px);line-height:.86}
 .world-copy#business .nine-line-layout span{font-size:clamp(22px,1.8vw,36px);line-height:1.22}
-.world-copy#business .strategy-human{left:1.5vw;top:13vh;text-align:left}
-.world-copy#business .strategy-human span{margin-left:24vw;text-align:center}
+.world-copy#business .strategy-human{left:1.8vw;top:13vh;text-align:left}
+.world-copy#business .strategy-human span{width:100%;text-align:right}
 .world-copy#business .strategy-trust{right:.6vw;top:39vh;text-align:right}
-.world-copy#business .strategy-trust span{margin-right:2.4vw;text-align:left}
+.world-copy#business .strategy-trust span{width:100%;text-align:right}
 .world-copy#business .strategy-success{left:1.8vw;top:64vh;text-align:left}
-.world-copy#business .strategy-success span{margin-left:.5vw;text-align:left}
-.business-signature{position:absolute;left:2.4vw;right:2.4vw;bottom:2.4vh;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:24px;border-top:3px solid rgba(255,255,255,.92);border-bottom:3px solid rgba(255,255,255,.92);padding:18px 0 10px;color:#fff}
-.business-signature strong{font-size:clamp(58px,7.4vw,142px);line-height:.82;font-weight:900;letter-spacing:.02em;white-space:nowrap}
-.business-signature span{padding-bottom:.45vw;font-size:clamp(20px,1.9vw,36px);line-height:1;font-weight:900;white-space:nowrap}
-@media(max-width:900px){.world-copy#business{min-height:780px;padding:64px 20px 24px}.world-copy#business .nine-line-layout{min-height:610px}.world-copy#business .nine-line-layout p{position:relative;inset:auto!important;margin:0 0 58px}.world-copy#business .strategy-human,.world-copy#business .strategy-trust,.world-copy#business .strategy-success{text-align:left}.world-copy#business .strategy-human span,.world-copy#business .strategy-trust span,.world-copy#business .strategy-success span{margin-left:0;margin-right:0;text-align:left}.world-copy#business .nine-line-layout b{font-size:clamp(48px,15vw,82px)}.world-copy#business .nine-line-layout span{font-size:16px;white-space:normal}.business-signature{position:relative;left:auto;right:auto;bottom:auto;grid-template-columns:1fr;padding:14px 0 9px}.business-signature strong{font-size:clamp(40px,12vw,72px)}.business-signature span{justify-self:end;font-size:18px}}
+.world-copy#business .strategy-success span{margin-left:0;text-align:left}
+@media(max-width:900px){.world-copy#business{min-height:780px;padding:64px 20px 24px}.world-copy#business .nine-line-layout{min-height:610px}.world-copy#business .nine-line-layout p{position:relative;inset:auto!important;margin:0 0 58px}.world-copy#business .strategy-human,.world-copy#business .strategy-trust,.world-copy#business .strategy-success{text-align:left}.world-copy#business .strategy-human span,.world-copy#business .strategy-trust span,.world-copy#business .strategy-success span{margin-left:0;margin-right:0;text-align:left}.world-copy#business .nine-line-layout b{font-size:clamp(48px,15vw,82px)}.world-copy#business .nine-line-layout span{font-size:16px;white-space:normal}}
 
 /* 2026-06-30 news section reference layout */
 .news#news{background:#d2d2d2;padding:155px 7.5vw 150px;color:#0d1118}
