@@ -108,7 +108,7 @@ body{font-family:Pretendard,Manrope,Arial,sans-serif!important}
 
 
 /* 2026-06-30 text-only layout without animation overrides */
-.world-copy#business{position:relative;background:linear-gradient(180deg,#312b7f 0%,#524b91 100%);color:#fff;min-height:100vh;padding:clamp(90px,10vh,130px) 2.4vw;overflow:hidden}
+.world-copy#business{position:relative;background:linear-gradient(180deg,#312b7f 0%,#524b91 100%);color:#fff;min-height:clamp(780px,62vw,1040px);padding:clamp(76px,6vw,116px) 2.4vw;overflow:hidden}
 .world-copy#business .nine-line-layout{position:relative;display:grid;align-content:start;gap:clamp(120px,8vw,180px);min-height:0;margin:0}
 .world-copy#business .nine-line-layout p{position:relative;margin:0;padding-left:0;color:#fff}
 .world-copy#business .nine-line-layout b,.world-copy#business .nine-line-layout span{display:block;color:#fff;font-weight:900;letter-spacing:0;white-space:nowrap}
@@ -153,7 +153,7 @@ body{font-family:Pretendard,Manrope,Arial,sans-serif!important}
 @media(max-width:900px){.ell-footer#footer{min-height:300px;padding:105px 28px 0;gap:20px}.ell-footer#footer>img{width:78px}.ell-footer#footer small{font-size:13px;letter-spacing:.035em}}
 
 /* 2026-06-30 map reference layout */
-.korea-map-section#map{--map-panel-gap:clamp(-230px,-11vw,-170px);position:relative;height:100vh;min-height:clamp(820px,52vw,960px);background:#393080;overflow:hidden}
+.korea-map-section#map{--map-panel-gap:clamp(-230px,-11vw,-170px);position:relative;height:clamp(820px,52vw,960px);min-height:0;background:#393080;overflow:hidden}
 .korea-map-section#map .map-stage{position:absolute;z-index:1;left:50%;top:clamp(4px,1vw,20px);display:grid;width:min(1760px,92vw);grid-template-columns:minmax(0,52fr) minmax(0,40.5fr);align-items:start;column-gap:0;transform:translateX(-50%)}
 .korea-map-section#map .map-canvas{container-type:inline-size;position:relative;left:auto;top:auto;right:auto;bottom:auto;width:100%;height:auto;aspect-ratio:1754/1241;transform:none;transition:none;pointer-events:auto;grid-column:1}
 .korea-map-section#map.has-selection .map-canvas{--map-shift:0vw}
