@@ -158,7 +158,7 @@ body{font-family:Pretendard,Manrope,Arial,sans-serif!important}
 
 /* 2026-06-30 map reference layout */
 .korea-map-section#map{height:100vh;min-height:clamp(820px,52vw,960px);background:#393080;overflow:hidden}
-.map-stage{position:absolute;z-index:3;left:50%;bottom:clamp(230px,27vh,270px);width:min(1760px,92vw);display:grid;grid-template-columns:minmax(0,1.18fr) minmax(0,1fr);align-items:center;gap:clamp(24px,3.2vw,60px);transform:translateX(-50%)}
+.map-stage{position:absolute;z-index:3;left:50%;bottom:clamp(230px,27vh,270px);width:min(1760px,92vw);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:clamp(24px,3.2vw,60px);transform:translateX(-50%)}
 .korea-map-section#map .map-canvas{container-type:inline-size;position:relative;left:auto;top:auto;right:auto;bottom:auto;width:100%;height:auto;aspect-ratio:1754/1241;transform:none;transition:none;pointer-events:auto}
 .korea-map-section#map.has-selection .map-canvas{--map-shift:0vw}
 .korea-outline-map{display:block;width:100%;height:100%;object-fit:contain;user-select:none;pointer-events:none}
