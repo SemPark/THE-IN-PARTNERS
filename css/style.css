@@ -92,7 +92,7 @@ body{font-family:Pretendard,Manrope,Arial,sans-serif!important}
 .ell-hero{height:100vh!important;min-height:720px!important;background:#111!important}
 .hero-sticky{height:100vh!important;min-height:720px!important;background:#111!important}
 .ell-hero video{filter:none!important}
-.hero-shade{background:linear-gradient(90deg,rgba(12,13,26,.42),rgba(12,13,26,.16)),rgba(0,0,0,.28)!important}
+.hero-shade{display:none!important}
 .hero-primary,.hero-secondary,.watch{display:none!important}
 .hero-title{position:absolute;z-index:4;left:60px;right:60px;bottom:28px;color:#fff;font-weight:900;letter-spacing:.01em}
 .hero-title-row{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 150px;align-items:end;gap:24px;border-bottom:2px solid rgba(255,255,255,.9);padding:0 0 14px;margin-top:12px}
@@ -158,7 +158,8 @@ body{font-family:Pretendard,Manrope,Arial,sans-serif!important}
 
 /* 2026-06-30 map reference layout */
 .korea-map-section#map{height:100vh;min-height:clamp(820px,52vw,960px);background:#393080;overflow:hidden}
-.korea-map-section#map .map-canvas{container-type:inline-size;position:absolute;left:0;top:4px;right:auto;bottom:auto;width:min(1120px,56vw);height:auto;aspect-ratio:1754/1241;transform:none;transition:none;pointer-events:auto}
+.map-stage{position:absolute;z-index:3;left:50%;bottom:clamp(230px,27vh,270px);width:min(1760px,92vw);display:grid;grid-template-columns:minmax(0,1.44fr) minmax(0,1fr);align-items:center;gap:clamp(24px,3.2vw,60px);transform:translateX(-50%)}
+.korea-map-section#map .map-canvas{container-type:inline-size;position:relative;left:auto;top:auto;right:auto;bottom:auto;width:100%;height:auto;aspect-ratio:1754/1241;transform:none;transition:none;pointer-events:auto}
 .korea-map-section#map.has-selection .map-canvas{--map-shift:0vw}
 .korea-outline-map{display:block;width:100%;height:100%;object-fit:contain;user-select:none;pointer-events:none}
 .map-pin-layer{position:absolute;z-index:2;left:24.4%;top:6.04%;width:51.2%;height:87.84%}
@@ -168,15 +169,15 @@ body{font-family:Pretendard,Manrope,Arial,sans-serif!important}
 .map-static-pin.is-active{width:clamp(20px,3.6cqw,32px);height:clamp(30px,5.5cqw,48px);z-index:3;border-radius:0;background:transparent;box-shadow:none;transform:translate(-50%,-84%);animation:selectedPinFloat 2.7s ease-in-out infinite}
 .map-static-pin.is-active img{display:block;width:100%;height:100%;object-fit:contain}
 .map-static-pin.is-active:hover{transform:translate(-50%,-84%) scale(1.04)}
-.map-card#projectPanel{position:absolute;z-index:5;right:7vw;top:29vh;width:min(780px,40.5vw);background:transparent;box-shadow:none;opacity:1;pointer-events:auto;transform:none;transition:opacity .25s ease}
+.map-card#projectPanel{position:relative;z-index:5;right:auto;top:auto;width:100%;background:transparent;box-shadow:none;opacity:1;pointer-events:auto;transform:none;transition:opacity .25s ease}
 .map-card#projectPanel.is-active{transform:none}
 .map-card#projectPanel>img{display:block;width:100%;height:auto;aspect-ratio:1215/608;object-fit:contain;box-shadow:0 14px 30px rgba(0,0,0,.22)}
 .map-card#projectPanel>div{display:none}
-.map-pills#projectPills{position:absolute;z-index:6;left:50%;right:auto;top:auto;bottom:26px;width:min(1280px,64vw);display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:12px 18px;transform:translateX(-50%);pointer-events:none}
+.map-pills#projectPills{position:absolute;z-index:6;left:50%;right:auto;top:auto;bottom:clamp(20px,4vh,38px);width:min(1320px,92vw);display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:12px 18px;transform:translateX(-50%);pointer-events:none}
 .map-pills#projectPills button{min-height:56px;padding:0 34px;border:5px solid rgba(255,255,255,.95);border-radius:999px;background:transparent;color:#fff;box-shadow:none;font-size:27px;line-height:1;font-weight:900;letter-spacing:-.045em;white-space:nowrap;pointer-events:auto;transition:background .18s ease,color .18s ease,opacity .18s ease}
 .map-pills#projectPills button.active{background:#fff;color:#aaa5bc}
 .map-pills#projectPills button:hover{background:rgba(255,255,255,.16)}
 .map-pills#projectPills button.active:hover{background:#fff}
 @keyframes selectedPinFloat{0%,100%{transform:translate(-50%,-84%)}50%{transform:translate(-50%,calc(-84% - 5px))}}
-@media(max-width:1180px){.korea-map-section#map{min-height:820px}.korea-map-section#map .map-canvas{left:-1vw;width:55vw}.map-card#projectPanel{right:5vw;top:32vh;width:42vw}.map-pills#projectPills{width:88vw}.map-pills#projectPills button{font-size:24px;min-height:52px;padding:0 28px;border-width:4px}}
-@media(max-width:900px){.korea-map-section#map{height:auto;min-height:0;padding:86px 18px 46px}.korea-map-section#map .map-canvas{position:relative;left:auto;top:auto;width:min(96vw,680px);margin:0 auto 28px;aspect-ratio:1754/1241}.map-card#projectPanel{position:relative;right:auto;top:auto;width:100%;margin:0 auto 30px}.map-card#projectPanel>img{box-shadow:0 10px 24px rgba(0,0,0,.18)}.map-pills#projectPills{position:relative;left:auto;bottom:auto;width:100%;transform:none;gap:10px;overflow:visible}.map-pills#projectPills button{min-height:40px;padding:0 16px;border-width:3px;font-size:15px}}
+@media(max-width:1180px){.korea-map-section#map{min-height:820px}.map-stage{bottom:clamp(260px,31vh,300px);width:94vw;grid-template-columns:minmax(0,1.36fr) minmax(0,1fr);gap:28px}.map-pills#projectPills{width:92vw}.map-pills#projectPills button{font-size:24px;min-height:52px;padding:0 28px;border-width:4px}}
+@media(max-width:900px){.korea-map-section#map{height:auto;min-height:0;padding:86px 18px 46px}.map-stage{position:relative;left:auto;bottom:auto;width:100%;display:block;transform:none}.korea-map-section#map .map-canvas{position:relative;left:auto;top:auto;width:min(96vw,680px);margin:0 auto 18px;aspect-ratio:1754/1241}.map-card#projectPanel{position:relative;right:auto;top:auto;width:100%;margin:0 auto 22px}.map-card#projectPanel>img{box-shadow:0 10px 24px rgba(0,0,0,.18)}.map-pills#projectPills{position:relative;left:auto;bottom:auto;width:100%;transform:none;gap:10px;overflow:visible}.map-pills#projectPills button{min-height:40px;padding:0 16px;border-width:3px;font-size:15px}}
