@@ -120,9 +120,9 @@ body{font-family:Pretendard,Manrope,Arial,sans-serif!important}
 .world-copy#business .nine-line-layout span{font-size:clamp(22px,1.8vw,36px);line-height:1.22}
 .world-copy#business .strategy-human{left:1.8vw;top:13vh;text-align:left}
 .world-copy#business .strategy-human span{width:100%;text-align:right}
-.world-copy#business .strategy-trust{right:.6vw;top:43vh;text-align:right}
+.world-copy#business .strategy-trust{right:.6vw;top:47vh;text-align:right}
 .world-copy#business .strategy-trust span{width:100%;text-align:right}
-.world-copy#business .strategy-success{left:1.8vw;top:6vh;text-align:left}
+.world-copy#business .strategy-success{left:1.8vw;top:72vh;text-align:left}
 .world-copy#business .strategy-success span{margin-left:0;text-align:left}
 @media(max-width:900px){.world-copy#business{min-height:780px;padding:64px 20px 24px}.world-copy#business .nine-line-layout{min-height:610px}.world-copy#business .nine-line-layout p{position:relative;inset:auto!important;margin:0 0 58px}.world-copy#business .strategy-human,.world-copy#business .strategy-trust,.world-copy#business .strategy-success{text-align:left}.world-copy#business .strategy-human span,.world-copy#business .strategy-trust span,.world-copy#business .strategy-success span{margin-left:0;margin-right:0;text-align:left}.world-copy#business .nine-line-layout b{font-size:clamp(48px,15vw,82px)}.world-copy#business .nine-line-layout span{font-size:16px;white-space:normal}}
 
