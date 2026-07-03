@@ -169,7 +169,7 @@ body{font-family:Pretendard,Manrope,Arial,sans-serif!important}
 .map-static-pin.is-active{width:clamp(20px,3.6cqw,32px);height:clamp(30px,5.5cqw,48px);z-index:3;border-radius:0;background:transparent;box-shadow:none;transform:translate(-50%,-84%);animation:selectedPinFloat 2.7s ease-in-out infinite}
 .map-static-pin.is-active img{display:block;width:100%;height:100%;object-fit:contain}
 .map-static-pin.is-active:hover{transform:translate(-50%,-84%) scale(1.04)}
-.map-card#projectPanel{position:relative;z-index:5;right:auto;top:auto;width:100%;background:transparent;box-shadow:none;opacity:1;pointer-events:auto;transform:translateX(-80px);transition:opacity .25s ease}
+.map-card#projectPanel{position:relative;z-index:5;right:auto;top:auto;width:100%;background:transparent;box-shadow:none;opacity:1;pointer-events:auto;transform:none;transition:opacity .25s ease}
 .map-card#projectPanel.is-active{transform:none}
 .map-card#projectPanel>img{display:block;width:100%;height:auto;aspect-ratio:1215/608;object-fit:contain;box-shadow:0 14px 30px rgba(0,0,0,.22)}
 .map-card#projectPanel>div{display:none}
