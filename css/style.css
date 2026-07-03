@@ -108,8 +108,8 @@ body{font-family:Pretendard,Manrope,Arial,sans-serif!important}
 
 
 /* 2026-06-30 text-only layout without animation overrides */
-.world-copy#business{position:relative;background:linear-gradient(180deg,#312b7f 0%,#524b91 100%);color:#fff;min-height:125vh;padding:0 2.4vw;overflow:hidden}
-.world-copy#business .nine-line-layout{position:relative;display:grid;align-content:start;gap:clamp(84px,7vw,130px);min-height:125vh;margin:0;padding:13vh 0 14vh}
+.world-copy#business{position:relative;background:linear-gradient(180deg,#312b7f 0%,#524b91 100%);color:#fff;min-height:100vh;padding:clamp(90px,10vh,130px) 2.4vw;overflow:hidden}
+.world-copy#business .nine-line-layout{position:relative;display:grid;align-content:start;gap:clamp(120px,8vw,180px);min-height:0;margin:0}
 .world-copy#business .nine-line-layout p{position:relative;margin:0;padding-left:0;color:#fff}
 .world-copy#business .nine-line-layout b,.world-copy#business .nine-line-layout span{display:block;color:#fff;font-weight:900;letter-spacing:0;white-space:nowrap}
 .world-copy#business .nine-line-layout b{font-size:clamp(96px,9vw,172px);line-height:.86}
