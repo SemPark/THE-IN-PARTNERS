@@ -113,7 +113,7 @@ body{font-family:Pretendard,Manrope,Arial,sans-serif!important}
 
 /* 2026-06-30 text-only layout without animation overrides */
 .world-copy#business{background:linear-gradient(180deg,#312b7f 0%,#524b91 100%);color:#fff;min-height:100vh;padding:76px 42px 80px;overflow:hidden}
-.world-copy#business .nine-line-layout{position:relative;display:grid;gap:clamp(72px,7vh,110px);min-height:calc(100vh - 156px);margin:0}
+.world-copy#business .nine-line-layout{position:relative;display:grid;gap:clamp(96px,9vh,150px);min-height:calc(100vh - 156px);margin:0}
 .world-copy#business .nine-line-layout p{position:relative;margin:0;color:#fff}
 .world-copy#business .nine-line-layout b,.world-copy#business .nine-line-layout span{display:block;color:#fff;font-weight:900;letter-spacing:0;white-space:nowrap}
 .world-copy#business .nine-line-layout b{font-size:clamp(64px,8.6vw,132px);line-height:.86}
