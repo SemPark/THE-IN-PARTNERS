@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#063e62" />
     <meta name="description" content="전국 주요 부동산 개발 프로젝트와 3D 지도를 한눈에 확인하는 더인파트너스 포트폴리오" />
     <title>THE IN PARTNERS — Performance</title>
-    <link rel="stylesheet" href="./css/style.css?v=20260703-business-align" />
+    <link rel="stylesheet" href="./css/style.css?v=20260703-section-scope" />
   </head>
   <body>
     <header class="ell-header">
@@ -70,24 +70,26 @@
       </section>
 
       <section class="korea-map-section" id="map">
-        <div class="map-canvas">
-          <canvas id="koreaMapCanvas" aria-label="대한민국 3D 프로젝트 지도"></canvas>
+        <div class="map-stage">
+          <div class="map-canvas">
+            <canvas id="koreaMapCanvas" aria-label="대한민국 3D 프로젝트 지도"></canvas>
+          </div>
+          <article class="map-card" id="projectPanel" aria-live="polite">
+            <img id="panelImage" src="" alt="" />
+            <div>
+              <span id="panelStatus"></span>
+              <h3 id="panelTitle"></h3>
+              <p id="panelAddress"></p>
+              <dl>
+                <div><dt>연면적</dt><dd id="panelArea"></dd></div>
+                <div><dt>세대수</dt><dd id="panelUnits"></dd></div>
+                <div><dt>준공</dt><dd id="panelCompletion"></dd></div>
+              </dl>
+              <small id="panelNote"></small>
+            </div>
+          </article>
         </div>
         <div class="map-pills" id="projectPills" aria-label="프로젝트 목록"></div>
-        <article class="map-card" id="projectPanel" aria-live="polite">
-          <img id="panelImage" src="" alt="" />
-          <div>
-            <span id="panelStatus"></span>
-            <h3 id="panelTitle"></h3>
-            <p id="panelAddress"></p>
-            <dl>
-              <div><dt>연면적</dt><dd id="panelArea"></dd></div>
-              <div><dt>세대수</dt><dd id="panelUnits"></dd></div>
-              <div><dt>준공</dt><dd id="panelCompletion"></dd></div>
-            </dl>
-            <small id="panelNote"></small>
-          </div>
-        </article>
       </section>
 
       <section class="news" id="news">
