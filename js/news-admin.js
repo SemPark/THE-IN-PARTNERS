@@ -18,10 +18,16 @@ const adminList = document.querySelector("#adminList");
 const message = document.querySelector("#message");
 const loginMessage = document.querySelector("#loginMessage");
 const adminCount = document.querySelector("#adminCount");
+const newsFormTitle = document.querySelector("#newsFormTitle");
+const newsSubmit = document.querySelector("#newsSubmit");
+const newsEditCancel = document.querySelector("#newsEditCancel");
+const editStatus = document.querySelector("#editStatus");
+const newsImagePreview = document.querySelector("#newsImagePreview");
 
 let token = sessionStorage.getItem("thein_news_github_token") || "";
 let fileSha = "";
 let newsItems = [];
+let editingId = "";
 
 if (token) {
   githubToken.value = token;
@@ -37,24 +43,44 @@ loginForm.addEventListener("submit", async (event) => {
 
 newsForm.addEventListener("submit", async (event) => {
   event.preventDefault();
-  const item = normalizeAdminNewsItem({
-    id: crypto.randomUUID(),
-    url: newsUrl.value,
-    title: newsTitle.value,
-    sourceName: hostname(newsUrl.value),
-    excerpt: newsExcerpt.value,
-    image: newsImage.value,
-    date: newsDate.value,
-  });
-
   try {
-    await saveNewsItems([item, ...newsItems], "Add news link");
-    newsForm.reset();
+    const item = normalizeAdminNewsItem({
+      id: editingId || crypto.randomUUID(),
+      url: newsUrl.value,
+      title: newsTitle.value,
+      sourceName: hostname(newsUrl.value),
+      excerpt: newsExcerpt.value,
+      image: newsImage.value,
+      date: newsDate.value,
+    });
+    const file = await fetchNewsFile();
+    fileSha = file.sha;
+    const latestItems = parseNewsContent(file.content);
+
+    if (editingId) {
+      const itemIndex = latestItems.findIndex((candidate) => candidate.id === editingId);
+      if (itemIndex < 0) throw new Error("수정할 기사를 찾지 못했습니다. 목록을 새로 불러와 주세요.");
+      latestItems[itemIndex] = item;
+      await saveNewsItems(latestItems, "Update news article");
+      resetNewsForm();
+      setMessage("기사를 수정했습니다. 사이트 반영에는 잠시 시간이 걸릴 수 있습니다.");
+      return;
+    }
+
+    await saveNewsItems([item, ...latestItems], "Add news link");
+    resetNewsForm();
     setMessage("뉴스 링크를 추가했습니다.");
   } catch (error) {
-    setMessage(error.message || "뉴스를 추가하지 못했습니다.");
+    setMessage(error.message || "기사를 저장하지 못했습니다.");
   }
 });
+
+newsEditCancel.addEventListener("click", () => {
+  resetNewsForm();
+  setMessage("기사 편집을 취소했습니다.");
+});
+
+newsImage.addEventListener("input", () => renderImagePreview(newsImage.value));
 
 async function loadAdminNews() {
   try {
@@ -121,16 +147,50 @@ function renderAdminList(items) {
   items.forEach((item) => {
     const row = document.createElement("div");
     row.className = "admin-item";
+    if (item.id === editingId) row.classList.add("is-editing");
     row.innerHTML = `
+      <div class="admin-thumb">${renderAdminImage(item.image)}</div>
       <div class="admin-news-text">
         <a class="admin-url" href="${escapeAdminHtml(item.url)}" target="_blank" rel="noopener">${escapeAdminHtml(item.title || item.url)}</a>
         <span>${escapeAdminHtml(item.sourceName || hostname(item.url))}</span>
       </div>
-      <button class="danger-btn" type="button" aria-label="삭제">×</button>
+      <div class="admin-actions">
+        <button class="edit-btn" type="button">수정</button>
+        <button class="danger-btn" type="button" aria-label="삭제">×</button>
+      </div>
     `;
-    row.querySelector("button").addEventListener("click", () => deleteNews(item));
+    row.querySelector(".edit-btn").addEventListener("click", () => startEditing(item));
+    row.querySelector(".danger-btn").addEventListener("click", () => deleteNews(item));
     adminList.appendChild(row);
   });
+}
+
+function startEditing(item) {
+  editingId = item.id;
+  newsUrl.value = item.url;
+  newsTitle.value = item.title;
+  newsExcerpt.value = item.excerpt;
+  newsImage.value = item.image;
+  newsDate.value = item.date;
+  newsFormTitle.textContent = "기사 편집";
+  newsSubmit.textContent = "수정 저장";
+  newsEditCancel.classList.remove("hidden");
+  editStatus.classList.remove("hidden");
+  renderImagePreview(item.image);
+  renderAdminList(newsItems);
+  newsForm.scrollIntoView({ behavior: "smooth", block: "start" });
+  newsTitle.focus();
+}
+
+function resetNewsForm() {
+  editingId = "";
+  newsForm.reset();
+  newsFormTitle.textContent = "기사 추가";
+  newsSubmit.textContent = "추가";
+  newsEditCancel.classList.add("hidden");
+  editStatus.classList.add("hidden");
+  renderImagePreview("");
+  renderAdminList(newsItems);
 }
 
 async function deleteNews(target) {
@@ -145,6 +205,7 @@ async function deleteNews(target) {
     }
 
     await saveNewsItems(nextItems, "Remove news link");
+    if (editingId === target.id) resetNewsForm();
     setMessage("뉴스 링크를 삭제했습니다.");
   } catch (error) {
     setMessage(error.message || "삭제하지 못했습니다.");
@@ -173,6 +234,43 @@ function normalizeAdminNewsItem(item) {
     image: String(item.image || "").trim(),
     date: String(item.date || "").trim(),
   };
+}
+
+function renderAdminImage(value) {
+  const imageUrl = normalizeAdminImageUrl(value);
+  if (!imageUrl) return '<div class="admin-thumb-fallback">NO IMAGE</div>';
+  return `<img src="${escapeAdminHtml(imageUrl)}" alt="" referrerpolicy="no-referrer" onerror="this.parentElement.innerHTML='&lt;div class=&quot;admin-thumb-fallback&quot;&gt;NO IMAGE&lt;/div&gt;'">`;
+}
+
+function renderImagePreview(value) {
+  const imageUrl = normalizeAdminImageUrl(value);
+  if (!imageUrl) {
+    newsImagePreview.innerHTML = '<div class="image-preview-empty">썸네일 미리보기</div>';
+    return;
+  }
+
+  newsImagePreview.innerHTML = `<img src="${escapeAdminHtml(imageUrl)}" alt="선택한 썸네일 미리보기" referrerpolicy="no-referrer">`;
+  newsImagePreview.querySelector("img").addEventListener("error", () => {
+    newsImagePreview.innerHTML = '<div class="image-preview-empty">이미지를 불러오지 못했습니다.</div>';
+  }, { once: true });
+}
+
+function normalizeAdminImageUrl(value) {
+  const src = String(value || "").trim();
+  if (!src) return "";
+
+  try {
+    const url = new URL(src);
+    if (url.hostname === "drive.google.com") {
+      const pathMatch = url.pathname.match(/\/file\/d\/([^/]+)/);
+      const id = pathMatch?.[1] || url.searchParams.get("id");
+      if (id) return `https://drive.google.com/thumbnail?id=${encodeURIComponent(id)}&sz=w1200`;
+    }
+  } catch {
+    return src;
+  }
+
+  return src;
 }
 
 function githubHeaders() {
