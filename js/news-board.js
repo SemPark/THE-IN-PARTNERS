@@ -47,7 +47,7 @@ function renderManagedNewsCard(item) {
   card.addEventListener("click", () => openManagedArticle(item));
 
   card.innerHTML = `
-    <div class="managed-news-thumb"><div class="managed-news-fallback">NEWS</div></div>
+    <div class="managed-news-thumb">${renderManagedImage(item.image)}</div>
     <div class="managed-news-body">
       <div class="news-meta">
         <span class="news-source">${escapeNewsHtml(item.sourceName)}</span>
@@ -91,8 +91,9 @@ async function fetchJson(url, options) {
 }
 
 function renderManagedImage(src) {
-  if (!src) return '<div class="managed-news-fallback">NEWS</div>';
-  return `<img src="${escapeNewsHtml(src)}" alt="" referrerpolicy="no-referrer" onerror="this.replaceWith(createManagedFallback())">`;
+  const imageUrl = normalizeManagedImageUrl(src);
+  if (!imageUrl) return '<div class="managed-news-fallback">NEWS</div>';
+  return `<img src="${escapeNewsHtml(imageUrl)}" alt="" referrerpolicy="no-referrer" onerror="this.replaceWith(createManagedFallback())">`;
 }
 
 function createManagedFallback() {
@@ -110,10 +111,29 @@ function normalizeNewsItem(item) {
     title: item.title || hostname(url),
     sourceName: item.sourceName || hostname(url),
     excerpt: item.excerpt || "",
-    image: item.image || "",
+    image: normalizeManagedImageUrl(item.image || ""),
     date: item.date || "",
     paragraphs: item.paragraphs || [],
   };
+}
+
+function normalizeManagedImageUrl(value) {
+  const src = String(value || "").trim();
+  if (!src) return "";
+
+  try {
+    const url = new URL(src);
+    if (url.hostname === "drive.google.com") {
+      const directId = url.searchParams.get("id");
+      const fileMatch = url.pathname.match(/\/file\/d\/([^/]+)/);
+      const id = directId || fileMatch?.[1];
+      if (id) return `https://drive.google.com/thumbnail?id=${encodeURIComponent(id)}&sz=w1200`;
+    }
+  } catch {
+    return src;
+  }
+
+  return src;
 }
 
 function buildNewsGridItems(news) {
