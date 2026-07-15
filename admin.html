@@ -144,6 +144,29 @@
         padding: 22px;
       }
 
+      .panel-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 18px;
+      }
+
+      .panel-heading h2 {
+        margin: 0;
+        color: var(--deep);
+        font-size: 22px;
+      }
+
+      .edit-status {
+        padding: 5px 9px;
+        border-radius: 6px;
+        background: rgba(8, 101, 141, 0.1);
+        color: var(--blue);
+        font-size: 12px;
+        font-weight: 800;
+      }
+
       .login-form,
       .admin-form {
         display: grid;
@@ -173,11 +196,61 @@
         resize: vertical;
       }
 
-      .primary-btn {
+      .image-preview {
+        grid-column: 1 / -1;
+        min-height: 180px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #eef1ed;
+      }
+
+      .image-preview img {
+        display: block;
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+      }
+
+      .image-preview-empty {
+        min-height: 180px;
+        display: grid;
+        place-items: center;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .form-actions {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+      }
+
+      .primary-btn,
+      .secondary-btn,
+      .edit-btn {
         min-height: 46px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 800;
+      }
+
+      .primary-btn {
         border: 0;
         background: var(--blue);
         color: white;
+      }
+
+      .secondary-btn,
+      .edit-btn {
+        border: 1px solid var(--line);
+        background: white;
+        color: var(--blue);
+      }
+
+      .secondary-btn {
+        padding: 0 18px;
       }
 
       .admin-list {
@@ -188,13 +261,42 @@
 
       .admin-item {
         display: grid;
-        grid-template-columns: 1fr 46px;
+        grid-template-columns: 86px minmax(0, 1fr) auto;
         gap: 12px;
         align-items: center;
         padding: 12px;
         border: 1px solid var(--line);
         border-radius: 8px;
         background: white;
+      }
+
+      .admin-item.is-editing {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 2px rgba(8, 101, 141, 0.08);
+      }
+
+      .admin-thumb {
+        width: 86px;
+        height: 64px;
+        overflow: hidden;
+        border-radius: 6px;
+        background: #eef1ed;
+      }
+
+      .admin-thumb img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .admin-thumb-fallback {
+        height: 100%;
+        display: grid;
+        place-items: center;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 800;
       }
 
       .admin-news-text {
@@ -223,6 +325,17 @@
         border: 1px solid #efcaca;
         background: #fff8f8;
         color: var(--danger);
+      }
+
+      .admin-actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      .edit-btn {
+        min-height: 40px;
+        padding: 0 13px;
+        font-size: 13px;
       }
 
       .message,
@@ -261,6 +374,24 @@
         .admin-form {
           grid-template-columns: 1fr;
         }
+
+        .form-actions {
+          grid-template-columns: 1fr;
+        }
+
+        .admin-item {
+          grid-template-columns: 72px minmax(0, 1fr);
+        }
+
+        .admin-thumb {
+          width: 72px;
+          height: 58px;
+        }
+
+        .admin-actions {
+          grid-column: 1 / -1;
+          justify-content: flex-end;
+        }
       }
     </style>
   </head>
@@ -291,19 +422,29 @@
       </section>
 
       <section class="panel hidden" id="managerPanel">
+        <div class="panel-heading">
+          <h2 id="newsFormTitle">기사 추가</h2>
+          <span class="edit-status hidden" id="editStatus">편집 중</span>
+        </div>
         <form class="admin-form" id="newsForm">
-          <input class="input full" id="newsUrl" type="url" placeholder="https://news.example.com/article" required />
-          <input class="input" id="newsTitle" type="text" placeholder="기사 제목" />
-          <input class="input" id="newsDate" type="text" placeholder="날짜" />
-          <input class="input full" id="newsImage" type="url" placeholder="썸네일 이미지 URL" />
-          <textarea class="input full" id="newsExcerpt" placeholder="기사 요약"></textarea>
-          <button class="primary-btn full" type="submit">추가</button>
+          <input class="input full" id="newsUrl" type="url" aria-label="기사 원문 URL" placeholder="https://news.example.com/article" required />
+          <input class="input" id="newsTitle" type="text" aria-label="기사 제목" placeholder="기사 제목" />
+          <input class="input" id="newsDate" type="text" aria-label="기사 날짜" placeholder="날짜" />
+          <input class="input full" id="newsImage" type="url" aria-label="썸네일 이미지 URL" placeholder="썸네일 이미지 URL" />
+          <div class="image-preview" id="newsImagePreview" aria-live="polite">
+            <div class="image-preview-empty">썸네일 미리보기</div>
+          </div>
+          <textarea class="input full" id="newsExcerpt" aria-label="기사 요약" placeholder="기사 요약"></textarea>
+          <div class="form-actions">
+            <button class="primary-btn" id="newsSubmit" type="submit">추가</button>
+            <button class="secondary-btn hidden" id="newsEditCancel" type="button">취소</button>
+          </div>
         </form>
         <div class="admin-list" id="adminList"></div>
         <p class="message" id="message"></p>
       </section>
     </main>
 
-    <script src="./js/news-admin.js"></script>
+    <script src="./js/news-admin.js?v=20260716-news-edit"></script>
   </body>
 </html>
